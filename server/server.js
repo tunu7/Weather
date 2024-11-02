@@ -3,9 +3,15 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require('./config/db');
 const weatherRoutes = require("./routes/weather");
+const path = require('path');
 
 dotenv.config();
+ 
+app.use(express.static(path.join(__dirname, '../client/build')));
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
